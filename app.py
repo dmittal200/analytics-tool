@@ -38,11 +38,11 @@ app.layout = html.Div([
         html.A('Financial Forecasting and Scenario Analysis Tool', className='navbar-brand text-white'),
 
         dcc.Tabs(id='tabs', value='tab-dashboard', children=[
-            dcc.Tab(label='Dashboard', value='tab-dashboard', className='nav-item'),
-            dcc.Tab(label='Forecast', value='tab-forecast', className='nav-item'),
-            dcc.Tab(label='Scenario Analysis', value='tab-scenario', className='nav-item')
+            dcc.Tab(label='Dashboard', value='tab-dashboard', className='btn btn-light'),
+            dcc.Tab(label='Forecast', value='tab-forecast', className='btn btn-light'),
+            dcc.Tab(label='Scenario Analysis', value='tab-scenario', className='btn btn-light')
         ], className='nav nav-tabs ml-auto')
-    ], className='navbar navbar-expand-lg navbar-dark bg-dark'),
+    ], className='navbar navbar-dark bg-dark'),
 
     html.Div(id='tab-content', className='container-fluid tab-content')
 ])
@@ -93,7 +93,7 @@ def render_tab_content(tab):
         return html.Div([
             html.H2('Forecasting Section', className='mb-4'),
             html.Div([
-                html.Label('Select Future Dates:'),
+                html.Label('Select Future Dates: ', className='mr-3'),
                 dcc.DatePickerRange(
                     id='date-picker-range',
                     start_date=data['date'].max(),
@@ -108,27 +108,26 @@ def render_tab_content(tab):
 
     elif tab == 'tab-scenario':
         return html.Div([
-                html.H2('Scenario Analysis', className='mb-4'),
-                html.Div([
-                    html.Label('Scenario Analysis:'),
-                    dcc.Dropdown(
-                        id='scenario-dropdown',
-                        options=[
-                            {'label': 'Base Case', 'value': 'base'},
-                            {'label': 'Best Case', 'value': 'best', 'disabled': False},
-                            {'label': 'Worst Case', 'value': 'worst', 'disabled': False},
-                        ],
-                        value='base',
-                        clearable=False,
-                        className='form-control',  # This is a Bootstrap class
-                        style={'width': '300px'}  # Adjust width as needed
-                    ),
-                ], className='mb-3'),  # Remove unnecessary flexbox and button div
+        html.H2('Scenario Analysis', className='mb-4'),
+        
+        html.Div([
+            dcc.Dropdown(
+                id='scenario-dropdown',
+                options=[
+                    {'label': 'Base Case', 'value': 'base'},
+                    {'label': 'Best Case', 'value': 'best', 'disabled': False},
+                    {'label': 'Worst Case', 'value': 'worst', 'disabled': False},
+                ],
+                value='',
+                clearable=True,
+                className=''
+            ),
+        ], className='mb-3',style={'width': '300px', 'display': 'inline-table'}),  # Remove unnecessary flexbox and button div
 
-                html.Button('Run Scenario', id='run-scenario-button', n_clicks=0, className='btn btn-dark ml-2 align-top'),  # Keep button separate
+        html.Button('Run Scenario', id='run-scenario-button', n_clicks=0, className='btn btn-dark ml-2 '),  # Keep button separate
 
-                dcc.Graph(id='scenario-data', className='mt-4')
-            ], className='p-4 bg-light rounded')
+        dcc.Graph(id='scenario-data', className='mt-4')
+    ], className='p-4 bg-light rounded')
 
 
 
